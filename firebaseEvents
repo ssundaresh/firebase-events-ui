@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!-- HTML5 Hello world by kirupa - http://www.kirupa.com/html5/getting_your_feet_wet_html5_pg1.htm -->
+<html lang="en-us">
+
+<head>
+<meta charset="utf-8">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://cdn.firebase.com/js/client/2.4.2/firebase.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+
+</head>
+
+<body>
+
+<div class="container">
+	<div class="table-responsive"></div>
+<table class="table table-striped">
+    <thead class="thead-inverse">
+    <tr>
+      <th>Name</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+    <tbody>
+<script> 
+// Get a database reference to our posts
+var ref = new Firebase("https://project-5292391381591893799.firebaseio.com/");
+
+ref.on("child_added", function(snapshot) {
+
+$("<tr id=\'"+snapshot.val().Name+"\'><td>"+snapshot.val().Name+"</td><td>"+snapshot.val().Status+"</td><td><button type=\"button\" class=\"btn btn-primary\">M</button>   <button type=\"button\" class=\"btn btn-primary\">H</button>   <button type=\"button\" class=\"btn btn-primary\">K</button></td></tr>").appendTo("tbody");
+
+});
+
+ref.on("child_changed", function(snapshot) {
+$('#'+snapshot.val().Name+'').replaceWith("<tr id=\'"+snapshot.val().Name+"\'><td>"+snapshot.val().Name+"</td><td>"+snapshot.val().Status+"</td><td><button type=\"button\" class=\"btn btn-primary\">M</button>   <button type=\"button\" class=\"btn btn-primary\">H</button>   <button type=\"button\" class=\"btn btn-primary\">K</button></td></tr>");
+});
+
+ref.on("child_removed", function(snapshot) {
+				$('#'+snapshot.val().Name+'').remove();
+});
+</script>
+</tbody>
+</table>
+</div>
+</div>
+</body>
+</html>
